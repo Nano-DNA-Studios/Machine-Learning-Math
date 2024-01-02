@@ -1,17 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using UnityEditor;
 using System;
 
-namespace DNAMath
+namespace DNAMatrices
 {
 
     /// <summary>
     /// Custom Matrix Class developped for working on the GPU and with DNANeuralNetworks
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class DNAMatrixFloat
     {
         // 0--------> Width
@@ -48,9 +44,7 @@ namespace DNAMath
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         public static void loadAssets()
         {
-            matrixMultScript = AssetDatabase.LoadAssetAtPath<ComputeShader>("Assets/DNAMath/MatrixMultiplicationGPU.compute");
-            matrixAdditionScript = AssetDatabase.LoadAssetAtPath<ComputeShader>("Assets/DNAMath/MatrixAdditionGPU.compute");
-            matrixSubstractionScript = AssetDatabase.LoadAssetAtPath<ComputeShader>("Assets/DNAMath/MatrixSubstractionGPU.compute");
+           
         }
 
         /// <summary>

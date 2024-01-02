@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using UnityEditor;
-using System;
 using System.IO;
+using System;
 
-namespace DNAMath
+namespace DNAMatrices
 {
 
     /// <summary>
     /// Custom Matrix Class developped for working on the GPU and with DNANeuralNetworks
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class DNAMatrix
     {
         // 0--------> Width
