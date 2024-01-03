@@ -315,7 +315,7 @@ namespace DNAMatrices
         /// <returns></returns>
         public static DNATensor operator -(DNATensor tensorA, DNATensor tensorB)
         {
-            if (tensorA.Dimensions == tensorB.Dimensions)
+            if (DNATensor.IsSameDimension(tensorA, tensorB))
             {
                 DNATensor outputTensor = new DNATensor(tensorA.Dimensions);
 
