@@ -20,7 +20,6 @@ public class TensorDivision
 
     TestHelper Helper = new TestHelper();
 
-
     /// <summary>
     /// Covers Integer Division
     /// </summary>
