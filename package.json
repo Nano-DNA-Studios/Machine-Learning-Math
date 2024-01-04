@@ -1,7 +1,7 @@
 {
-  "name": "com.nanodnastudios.dnamatrices",
+  "name": "com.nanodnastudios.machinelearningmath",
   "version": "1.0.1",
-  "description": "This package is used to import Matrix Classes and Operations. These are mostly used for Neural Network Operations",
+  "description": "his package is used to easily access and use machine leanrning math for Neural Networks",
   "license": "APACHE",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
   "AI",
   "Math"
   ],
-  "displayName": "DNA Matrices",
+  "displayName": "Machine Learning Math",
   "unity": "2021.3",
   "type": "tool"
 }
