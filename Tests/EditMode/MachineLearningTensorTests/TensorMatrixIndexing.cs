@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using MachineLearningMath;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
+using MachineLearningTestHelper;
 
 namespace MachineLearningTensorTests
 {

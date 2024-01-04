@@ -1,5 +1,6 @@
 using MachineLearningMath;
 using NUnit.Framework;
+using MachineLearningTestHelper;
 
 namespace MachineLearningTensorTests
 {
