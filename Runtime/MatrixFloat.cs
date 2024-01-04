@@ -3,12 +3,11 @@ using System;
 
 namespace MachineLearningMath
 {
-
     /// <summary>
     /// Custom Matrix Class developped for working on the GPU and with DNANeuralNetworks
     /// </summary>
     [Serializable]
-    public class DNAMatrixFloat
+    public class MatrixFloat
     {
         // 0--------> Width
         // |
@@ -95,7 +94,11 @@ namespace MachineLearningMath
             }
         }
 
-        public DNAMatrixFloat (DNAMatrix matrix)
+        /// <summary>
+        /// Constructor function initializing the Matrix
+        /// </summary>
+        /// <param name="matrix"></param>
+        public MatrixFloat (Matrix matrix)
         {
             this.Width = matrix.Width;
             this.Height = matrix.Height;
@@ -113,7 +116,7 @@ namespace MachineLearningMath
         /// </summary>
         /// <param name="height"></param>
         /// <param name="width"></param>
-        public DNAMatrixFloat(int height, int width)
+        public MatrixFloat(int height, int width)
         {
             this.Width = width;
             this.Height = height;
@@ -200,9 +203,9 @@ namespace MachineLearningMath
         /// <param name="height"></param>
         /// <param name="width"></param>
         /// <returns></returns>
-        public static DNAMatrixFloat Increment(int height, int width)
+        public static MatrixFloat Increment(int height, int width)
         {
-            DNAMatrixFloat matrix = new DNAMatrixFloat(height, width);
+            MatrixFloat matrix = new MatrixFloat(height, width);
 
             for (int i = 0; i < width * height; i++)
             {
@@ -277,7 +280,7 @@ namespace MachineLearningMath
         /// <param name="index"></param>
         /// <param name="mat"></param>
         /// <returns></returns>
-        public static (int height, int width) GetIndex(int index, DNAMatrixFloat mat)
+        public static (int height, int width) GetIndex(int index, MatrixFloat mat)
         {
             int height = index / mat.Width;
             int width = index % mat.Width;
@@ -330,10 +333,10 @@ namespace MachineLearningMath
         /// <summary>
         /// Transposes the matrix
         /// </summary>
-        public DNAMatrixFloat Transpose()
+        public MatrixFloat Transpose()
         {
 
-            DNAMatrixFloat newMat = new DNAMatrixFloat(this.Width, this.Height);
+            MatrixFloat newMat = new MatrixFloat(this.Width, this.Height);
 
             for (int width = 0; width < this.Width; width++)
             {
@@ -352,9 +355,9 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="matrixB"></param>
         /// <returns></returns>
-        public static DNAMatrixFloat operator +(DNAMatrixFloat matrixA, DNAMatrixFloat matrixB)
+        public static MatrixFloat operator +(MatrixFloat matrixA, MatrixFloat matrixB)
         {
-            DNAMatrixFloat newMat = new DNAMatrixFloat(0, 0);
+            MatrixFloat newMat = new MatrixFloat(0, 0);
 
             // if (matrixAdditionScript != null)
             //    newMat = matrixAdditionGPU(matrixA, matrixB);
@@ -362,7 +365,7 @@ namespace MachineLearningMath
             // {
             if (matrixA.Height == matrixB.Height && matrixA.Width == matrixB.Width)
             {
-                newMat = new DNAMatrixFloat(matrixA.Height, matrixA.Width);
+                newMat = new MatrixFloat(matrixA.Height, matrixA.Width);
 
                 for (int i = 0; i < matrixA.Values.Length; i++)
                 {
@@ -383,13 +386,13 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="matrixB"></param>
         /// <returns></returns>
-        public static DNAMatrixFloat operator -(DNAMatrixFloat matrixA, DNAMatrixFloat matrixB)
+        public static MatrixFloat operator -(MatrixFloat matrixA, MatrixFloat matrixB)
         {
-            DNAMatrixFloat newMat = new DNAMatrixFloat(0, 0);
+            MatrixFloat newMat = new MatrixFloat(0, 0);
 
             if (matrixA.Height == matrixB.Height && matrixA.Width == matrixB.Width)
             {
-                newMat = new DNAMatrixFloat(matrixA.Height, matrixA.Width);
+                newMat = new MatrixFloat(matrixA.Height, matrixA.Width);
 
                 for (int i = 0; i < matrixA.Values.Length; i++)
                 {
@@ -410,9 +413,9 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="matrixB"></param>
         /// <returns></returns>
-        public static DNAMatrixFloat operator *(DNAMatrixFloat matrixA, DNAMatrixFloat matrixB)
+        public static MatrixFloat operator *(MatrixFloat matrixA, MatrixFloat matrixB)
         {
-            DNAMatrixFloat newMat = new DNAMatrixFloat(0, 0);
+            MatrixFloat newMat = new MatrixFloat(0, 0);
 
             if (matrixMultScript != null)
                 newMat = multMatrixGPU(matrixA, matrixB);
@@ -421,7 +424,7 @@ namespace MachineLearningMath
                 //Check if matrixA Width is equal to matrixB Height
                 if (matrixA.Width == matrixB.Height)
                 {
-                    newMat = new DNAMatrixFloat(matrixA.Height, matrixB.Width);
+                    newMat = new MatrixFloat(matrixA.Height, matrixB.Width);
 
                     System.Threading.Tasks.Parallel.For(0, newMat.Values.Length, (index) =>
                     {
@@ -445,11 +448,11 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="factor"></param>
         /// <returns></returns>
-        public static DNAMatrixFloat operator *(DNAMatrixFloat matrixA, float factor)
+        public static MatrixFloat operator *(MatrixFloat matrixA, float factor)
         {
-            DNAMatrixFloat newMat = new DNAMatrixFloat(0, 0);
+            MatrixFloat newMat = new MatrixFloat(0, 0);
 
-            newMat = new DNAMatrixFloat(matrixA.Height, matrixA.Width);
+            newMat = new MatrixFloat(matrixA.Height, matrixA.Width);
 
             for (int i = 0; i < matrixA.Values.Length; i++)
             {
@@ -465,12 +468,12 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="matrixB"></param>
         /// <returns></returns>
-        public static DNAMatrixFloat multMatrixGPU(DNAMatrixFloat matrixA, DNAMatrixFloat matrixB)
+        public static MatrixFloat multMatrixGPU(MatrixFloat matrixA, MatrixFloat matrixB)
         {
-            DNAMatrixFloat newMat = new DNAMatrixFloat(0, 0);
+            MatrixFloat newMat = new MatrixFloat(0, 0);
             if (matrixA.Width == matrixB.Height)
             {
-                newMat = new DNAMatrixFloat(matrixA.Height, matrixB.Width);
+                newMat = new MatrixFloat(matrixA.Height, matrixB.Width);
 
                 ComputeShader computeShader = matrixMultScript;
 
@@ -527,14 +530,14 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="matrixB"></param>
         /// <returns></returns>
-        public static DNAMatrixFloat matrixAdditionGPU(DNAMatrixFloat matrixA, DNAMatrixFloat matrixB)
+        public static MatrixFloat matrixAdditionGPU(MatrixFloat matrixA, MatrixFloat matrixB)
         {
-            DNAMatrixFloat newMat = new DNAMatrixFloat(0, 0);
+            MatrixFloat newMat = new MatrixFloat(0, 0);
 
             if (_SameDimension(matrixA, matrixB))
             {
                 ComputeShader computeShader = matrixAdditionScript;
-                newMat = new DNAMatrixFloat(matrixA.Height, matrixB.Width);
+                newMat = new MatrixFloat(matrixA.Height, matrixB.Width);
 
                 /*
                 int sizeOfDimensions = sizeof(int) * 2;
@@ -585,14 +588,14 @@ namespace MachineLearningMath
             return newMat;
         }
 
-        public static DNAMatrixFloat matrixSubstractionGPU(DNAMatrixFloat matrixA, DNAMatrixFloat matrixB)
+        public static MatrixFloat matrixSubstractionGPU(MatrixFloat matrixA, MatrixFloat matrixB)
         {
-            DNAMatrixFloat newMat = new DNAMatrixFloat(0, 0);
+            MatrixFloat newMat = new MatrixFloat(0, 0);
 
             if (_SameDimension(matrixA, matrixB))
             {
                 ComputeShader computeShader = matrixSubstractionScript;
-                newMat = new DNAMatrixFloat(matrixA.Height, matrixB.Width);
+                newMat = new MatrixFloat(matrixA.Height, matrixB.Width);
 
                 ComputeBuffer matrixAValues = new ComputeBuffer(matrixA.Values.Length, sizeof(float));
                 matrixAValues.SetData(matrixA.Values);
@@ -637,7 +640,7 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="matrixB"></param>
         /// <returns></returns>
-        private static bool _SameDimension(DNAMatrixFloat matrixA, DNAMatrixFloat matrixB)
+        private static bool _SameDimension(MatrixFloat matrixA, MatrixFloat matrixB)
         {
             if (matrixA.Height == matrixB.Height && matrixA.Width == matrixB.Width)
                 return true;
