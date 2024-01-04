@@ -6,6 +6,8 @@ using UnityEngine;
 public class TestHelper
 {
     private static int[] _DefaultDimension = { 2, 4, 4 };
+    private static int[] _StackedDefaultDimension = { 3, 4, 4 };
+    public int[] StackedDefaultDimension = { 3, 4, 4 };
     public int[] DefaultDimension = new int[] { 2, 4, 4 };
     public int[] integerValues = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
     public int[] indexValues = new int[] { 0, 1, 2, 6, 7, 12, 15, 16, 18, 23, 27, 31 };
@@ -16,9 +18,15 @@ public class TestHelper
     public DNATensor DoubleIncrement = DNATensor.Increment(_DefaultDimension) * 2;
     public DNATensor Increment = new DNATensor(_DefaultDimension);
     public DNATensor Empty = new DNATensor(_DefaultDimension);
+    public DNATensor StackedEmptyTensor = new DNATensor(_StackedDefaultDimension);
+    public DNATensor StackedIncrementTensor = _Increment ^ _IncrementMatrix;
+
+    private static DNATensor _Increment = new DNATensor(_DefaultDimension);
+    private static DNATensor _Empty = new DNATensor(_DefaultDimension);
 
     public DNAMatrix EmptyMatrix = new DNAMatrix(4, 4);
     public DNAMatrix IncrementMatrix = DNAMatrix.Increment(4, 4);
+    private static DNAMatrix _IncrementMatrix = DNAMatrix.Increment(4, 4);
 
     public double[] IncrememtArray = DNATensor.Increment(_DefaultDimension).Values;
     public double[] EmptyArray = new DNATensor(_DefaultDimension).Values;

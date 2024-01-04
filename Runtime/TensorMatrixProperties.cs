@@ -18,7 +18,7 @@ public class TensorMatrixProperties
     /// <summary>
     /// Returns the Tensors Stored Matrix Width
     /// </summary>
-    public int MatrixWidth
+    public int Width
     {
         get => Tensor.Dimensions[Tensor.Dimensions.Length - 1];
     }
@@ -26,7 +26,7 @@ public class TensorMatrixProperties
     /// <summary>
     /// Returns the Tensors Stored Matrix Height
     /// </summary>
-    public int MatrixHeight
+    public int Height
     {
         get => Tensor.Dimensions[Tensor.Dimensions.Length - 2];
     }
@@ -36,7 +36,15 @@ public class TensorMatrixProperties
     /// </summary>
     public int[] MatrixDimension
     {
-        get => new int[] { MatrixHeight, MatrixWidth };
+        get => new int[] { Height, Width };
+    }
+
+    /// <summary>
+    /// Getter for the Debug Dimension
+    /// </summary>
+    public string DebugDimension
+    {
+        get => GetDebugDimension();
     }
 
     /// <summary>
@@ -52,7 +60,7 @@ public class TensorMatrixProperties
     /// </summary>
     public int MatrixLength
     {
-        get => MatrixWidth * MatrixHeight;
+        get => Width * Height;
     }
 
     /// <summary>
@@ -179,7 +187,7 @@ public class TensorMatrixProperties
 
         if (SAFE_LENGTH)
         {
-            DNAMatrix matrix = new DNAMatrix(MatrixHeight, MatrixWidth);
+            DNAMatrix matrix = new DNAMatrix(Height, Width);
 
             Array.Copy(Tensor.Values, index, matrix.Values, 0, matrix.Values.Length);
 
@@ -214,12 +222,12 @@ public class TensorMatrixProperties
     /// <exception cref="InvalidOperationException"></exception>
     private void SetMatrix(int matrixIndex, DNAMatrix matrix)
     {
-        bool MATCHING_MATRIX_DIMENSIONS = MatrixDimension == matrix.Dimensions;
-
+        bool MATCHING_MATRIX_DIMENSIONS = DNATensor.IsSameDimension(Tensor, matrix);
+        
         if (MATCHING_MATRIX_DIMENSIONS)
             PasteMatrix(matrixIndex * MatrixLength, matrix);
         else
-            throw new InvalidOperationException($"The Tensors and the Matrix Dimensions don't Match. ({MatrixDimension}, {matrix.Dimensions})");
+            throw new InvalidOperationException($"The Tensors and the Matrix Dimensions don't Match. ({DebugDimension}, {matrix.DebugDimension})");
     }
 
     /// <summary>
@@ -262,8 +270,14 @@ public class TensorMatrixProperties
             throw new IndexOutOfRangeException("The Indexes Specified are out of the Tensors Range.");
     }
 
-
-
+    /// <summary>
+    /// Returns the Dimensions of the Matrix in a string format 
+    /// </summary>
+    /// <returns></returns>
+    public string GetDebugDimension()
+    {
+        return $"({Height} x {Width})";
+    }
 
 
 }

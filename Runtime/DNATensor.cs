@@ -32,7 +32,7 @@ namespace DNAMatrices
         public int[] Dimensions
         {
             get => _dimensions;
-            set => _dimensions = value;
+            private set => _dimensions = value;
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace DNAMatrices
         /// <param name="dim2"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        private static bool IsSameDimension(DNATensor tensor1, DNATensor tensor2)
+        public static bool IsSameDimension(DNATensor tensor1, DNATensor tensor2)
         {
             int[] dim1 = tensor1.Dimensions;
             int[] dim2 = tensor2.Dimensions;
@@ -241,7 +241,7 @@ namespace DNAMatrices
         /// <param name="dim2"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        private static bool IsSameDimension(DNATensor tensor, DNAMatrix matrix)
+        public static bool IsSameDimension(DNATensor tensor, DNAMatrix matrix)
         {
             int[] dim1 = tensor.MatrixProperties.MatrixDimension;
             int[] dim2 = matrix.Dimensions;

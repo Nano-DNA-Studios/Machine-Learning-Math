@@ -93,7 +93,7 @@ namespace DNAMatrices
         /// <summary>
         /// Gets the Dimensions of the Matrix in String Form (HeightxWidth)
         /// </summary>
-        public string DebugDimensions { get => GetDebugDimension(); }
+        public string DebugDimension { get => GetDebugDimension(); }
 
         /// <summary>
         /// Gets the Dimensions of the Matrix in Array format
@@ -319,6 +319,32 @@ namespace DNAMatrices
         }
 
         /// <summary>
+        /// Determines if the Tensors have the Same Dimension
+        /// </summary>
+        /// <param name="dim1"></param>
+        /// <param name="dim2"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        private static bool IsSameDimension(DNAMatrix matrix1, DNAMatrix matrix2)
+        {
+            int[] dim1 = matrix1.Dimensions;
+            int[] dim2 = matrix2.Dimensions;
+
+            if (dim1.Length == dim2.Length)
+            {
+                for (int i = 0; i < dim1.Length; i++)
+                {
+                    if (dim1[i] != dim2[i])
+                        return false;
+                }
+            }
+            else
+                throw new InvalidOperationException($"Matrix dimensions do not match. ({dim1.Length}, {dim2.Length})");
+
+            return true;
+        }
+
+        /// <summary>
         /// Returns the Dot Product
         /// </summary>
         /// <param name="vector1"></param>
@@ -392,7 +418,7 @@ namespace DNAMatrices
         /// <exception cref="InvalidOperationException"></exception>
         public static DNATensor operator ^(DNAMatrix matrixA, DNAMatrix matrixB)
         {
-            if (matrixA.Dimensions == matrixB.Dimensions)
+            if (IsSameDimension(matrixA, matrixB))
             {
                 DNATensor outputTensor = new DNATensor(new int[] { 2, matrixA.Height, matrixB.Width });
 

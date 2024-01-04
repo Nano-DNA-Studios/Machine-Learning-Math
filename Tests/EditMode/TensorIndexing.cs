@@ -71,8 +71,6 @@ public class TensorIndexing
         int count = 0;
         foreach (int index in Helper.shortIndexValues)
         {
-            Debug.Log(index);
-            Debug.Log(tensor.GetFlatIndex(Helper.indexes[count]));
             Assert.AreEqual(index, tensor.GetFlatIndex(Helper.indexes[count]));
             count++;
         }
