@@ -1,4 +1,4 @@
-using DNAMatrices;
+using MachineLearningMath;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,21 +15,21 @@ public class TestHelper
     public int[][] indexes = new int[][] { new int[] { 0, 0, 0 }, new int[] { 0, 1, 2 }, new int[] { 0, 3, 0}, new int[] { 1, 0, 2 }, new int[] { 1, 2, 3 }, new int[] { 1, 3, 3 } };
     public double[] doubleValues = new double[] { 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2.5 };
 
-    public DNATensor DoubleIncrement = DNATensor.Increment(_DefaultDimension) * 2;
-    public DNATensor Increment = new DNATensor(_DefaultDimension);
-    public DNATensor Empty = new DNATensor(_DefaultDimension);
-    public DNATensor StackedEmptyTensor = new DNATensor(_StackedDefaultDimension);
-    public DNATensor StackedIncrementTensor = _Increment ^ _IncrementMatrix;
+    public Tensor DoubleIncrement = Tensor.Increment(_DefaultDimension) * 2;
+    public Tensor Increment = new Tensor(_DefaultDimension);
+    public Tensor Empty = new Tensor(_DefaultDimension);
+    public Tensor StackedEmptyTensor = new Tensor(_StackedDefaultDimension);
+    public Tensor StackedIncrementTensor = _Increment ^ _IncrementMatrix;
 
-    private static DNATensor _Increment = new DNATensor(_DefaultDimension);
-    private static DNATensor _Empty = new DNATensor(_DefaultDimension);
+    private static Tensor _Increment = new Tensor(_DefaultDimension);
+    private static Tensor _Empty = new Tensor(_DefaultDimension);
 
-    public DNAMatrix EmptyMatrix = new DNAMatrix(4, 4);
-    public DNAMatrix IncrementMatrix = DNAMatrix.Increment(4, 4);
-    private static DNAMatrix _IncrementMatrix = DNAMatrix.Increment(4, 4);
+    public Matrix EmptyMatrix = new Matrix(4, 4);
+    public Matrix IncrementMatrix = Matrix.Increment(4, 4);
+    private static Matrix _IncrementMatrix = Matrix.Increment(4, 4);
 
-    public double[] IncrememtArray = DNATensor.Increment(_DefaultDimension).Values;
-    public double[] EmptyArray = new DNATensor(_DefaultDimension).Values;
+    public double[] IncrememtArray = Tensor.Increment(_DefaultDimension).Values;
+    public double[] EmptyArray = new Tensor(_DefaultDimension).Values;
 
     /// 
     /// Helper Functions

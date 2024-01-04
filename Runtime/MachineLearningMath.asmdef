@@ -1,6 +1,6 @@
 {
-    "name": "DNAMatrices",
-    "rootNamespace": "DNAMatrices",
+    "name": "MachineLearningMath",
+    "rootNamespace": "MachineLearningMath",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using DNAMatrices;
+using MachineLearningMath;
 using NUnit.Framework;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 /// <summary>
 /// Covers Indexing Operations for Tensors
@@ -17,7 +12,7 @@ public class TensorIndexing
     [Test]
     public void AllValuesIndex()
     {
-        DNATensor tensor = DNATensor.Increment(Helper.DefaultDimension);
+        Tensor tensor = Tensor.Increment(Helper.DefaultDimension);
 
         Assert.AreEqual(tensor.Length, Helper.IncrememtArray.Length);
 
@@ -28,7 +23,7 @@ public class TensorIndexing
     [Test]
     public void AllValuesIndexEmpty()
     {
-        DNATensor tensor = new DNATensor(Helper.DefaultDimension);
+        Tensor tensor = new Tensor(Helper.DefaultDimension);
 
         Assert.AreEqual(tensor.Length, Helper.EmptyArray.Length);
 
@@ -39,7 +34,7 @@ public class TensorIndexing
     [Test]
     public void SetCertainIndexValue()
     {
-        DNATensor tensor = new DNATensor(Helper.DefaultDimension);
+        Tensor tensor = new Tensor(Helper.DefaultDimension);
         double[] values = Helper.GetEmptyValues(Helper.DefaultDimension);
 
         Assert.AreEqual(values.Length, tensor.Length);
@@ -52,7 +47,7 @@ public class TensorIndexing
     [Test]
     public void GetCertainIndexValue()
     {
-        DNATensor tensor = new DNATensor(Helper.DefaultDimension);
+        Tensor tensor = new Tensor(Helper.DefaultDimension);
         double[] values = Helper.GetEmptyValues(Helper.DefaultDimension);
 
         Assert.AreEqual(values.Length, tensor.Length);
@@ -66,7 +61,7 @@ public class TensorIndexing
     [Test]
     public void GetAccurateFlatIndex()
     {
-        DNATensor tensor = new DNATensor(Helper.DefaultDimension);
+        Tensor tensor = new Tensor(Helper.DefaultDimension);
 
         int count = 0;
         foreach (int index in Helper.shortIndexValues)
@@ -79,7 +74,7 @@ public class TensorIndexing
     [Test]
     public void GetAccurateIndex()
     {
-        DNATensor tensor = new DNATensor(Helper.DefaultDimension);
+        Tensor tensor = new Tensor(Helper.DefaultDimension);
 
         int count = 0;
         foreach (int[] index in Helper.indexes)
@@ -89,7 +84,7 @@ public class TensorIndexing
         }
     }
 
-    private void SetIndex(DNATensor tensor, double[] values)
+    private void SetIndex(Tensor tensor, double[] values)
     {
         int count = 0;
         foreach (int index in Helper.indexValues)

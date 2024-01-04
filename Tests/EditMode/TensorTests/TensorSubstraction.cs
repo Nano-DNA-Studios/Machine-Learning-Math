@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using DNAMatrices;
+using MachineLearningMath;
 
 
 /// <summary>
@@ -15,9 +15,9 @@ public class TensorSubstraction
     int[] integerValues = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
     double[] doubleValues = new double[] { 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2.5 };
 
-    DNATensor DoubleIncrement = DNATensor.Increment(DefaultDimension) * 2;
-    DNATensor Increment = new DNATensor(DefaultDimension);
-    DNATensor Empty = new DNATensor(DefaultDimension);
+    Tensor DoubleIncrement = Tensor.Increment(DefaultDimension) * 2;
+    Tensor Increment = new Tensor(DefaultDimension);
+    Tensor Empty = new Tensor(DefaultDimension);
 
     TestHelper Helper = new TestHelper();
 
@@ -27,10 +27,10 @@ public class TensorSubstraction
     [Test]
     public void Substraction()
     {
-        DNATensor Tensor1 = DNATensor.Increment(DefaultDimension);
-        DNATensor Tensor2 = DNATensor.Increment(DefaultDimension);
+        Tensor Tensor1 = Tensor.Increment(DefaultDimension);
+        Tensor Tensor2 = Tensor.Increment(DefaultDimension);
 
-        DNATensor ResultTensor = Tensor1 - Tensor2;
+        Tensor ResultTensor = Tensor1 - Tensor2;
 
         double[] values = Helper.GetSameValues(DefaultDimension, 0);
 
@@ -46,9 +46,9 @@ public class TensorSubstraction
     {
         foreach (int scalar in integerValues)
         {
-            DNATensor Tensor = DNATensor.Increment(DefaultDimension);
+            Tensor Tensor = Tensor.Increment(DefaultDimension);
 
-            DNATensor ResultTensor = Tensor - scalar;
+            Tensor ResultTensor = Tensor - scalar;
 
             double[] values = Helper.ScalarSub(Helper.GetIncrementValues(DefaultDimension), scalar);
 
@@ -65,9 +65,9 @@ public class TensorSubstraction
     {
         foreach (int scalar in integerValues)
         {
-            DNATensor Tensor = new DNATensor(DefaultDimension);
+            Tensor Tensor = new Tensor(DefaultDimension);
 
-            DNATensor ResultTensor = Tensor - scalar;
+            Tensor ResultTensor = Tensor - scalar;
 
             double[] values = Helper.ScalarSub(Helper.GetEmptyValues(DefaultDimension), scalar);
 
@@ -84,9 +84,9 @@ public class TensorSubstraction
     {
         foreach (double scalar in doubleValues)
         {
-            DNATensor Tensor = DNATensor.Increment(DefaultDimension);
+            Tensor Tensor = Tensor.Increment(DefaultDimension);
 
-            DNATensor ResultTensor = Tensor - scalar;
+            Tensor ResultTensor = Tensor - scalar;
 
             double[] values = Helper.ScalarSub(Helper.GetIncrementValues(DefaultDimension), scalar);
 
@@ -103,9 +103,9 @@ public class TensorSubstraction
     {
         foreach (double scalar in doubleValues)
         {
-            DNATensor Tensor = new DNATensor(DefaultDimension);
+            Tensor Tensor = new Tensor(DefaultDimension);
 
-            DNATensor ResultTensor = Tensor - scalar;
+            Tensor ResultTensor = Tensor - scalar;
 
             double[] values = Helper.ScalarSub(Helper.GetEmptyValues(DefaultDimension), scalar);
 

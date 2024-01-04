@@ -7,12 +7,12 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
 
-namespace DNAMatrices
+namespace MachineLearningMath
 {
     /// <summary>
     /// Custom Tensor Class developped for working on the GPU and with DNANeuralNetworks
     /// </summary>
-    public class DNATensor
+    public class Tensor
     {
         // [depth , height, width]
         // 0--------> Width
@@ -93,7 +93,7 @@ namespace DNAMatrices
         /// Initializes a new Tensor Based off the Suggested Dimensions
         /// </summary>
         /// <param name="dimensions"></param>
-        public DNATensor(int[] dimensions)
+        public Tensor(int[] dimensions)
         {
             _dimensions = dimensions;
             _values = new double[GetLength()];
@@ -104,14 +104,14 @@ namespace DNAMatrices
         /// Initializes a new Tensor Based off a List of Matrices that Populates it
         /// </summary>
         /// <param name="matrices"></param>
-        public DNATensor(DNAMatrix[] matrices)
+        public Tensor(Matrix[] matrices)
         {
             _dimensions = new int[] { matrices.Length, matrices[0].Height, matrices[0].Width };
             _values = new double[GetLength()];
             MatrixProperties = new TensorMatrixProperties(this);
 
             int count = 0;
-            foreach (DNAMatrix matrix in matrices)
+            foreach (Matrix matrix in matrices)
             {
                 Array.Copy(matrix.Values, 0, _values, count, matrix.Length);
                 count += matrix.Length;
@@ -123,9 +123,9 @@ namespace DNAMatrices
         /// </summary>
         /// <param name="dimensions"></param>
         /// <returns></returns>
-        public static DNATensor Increment(int[] dimensions)
+        public static Tensor Increment(int[] dimensions)
         {
-            DNATensor tensor = new DNATensor(dimensions);
+            Tensor tensor = new Tensor(dimensions);
 
             for (int i = 0; i < tensor.Length; i++)
                 tensor[i] = i;
@@ -167,7 +167,7 @@ namespace DNAMatrices
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public static int[] GetIndex(int index, DNATensor tensor)
+        public static int[] GetIndex(int index, Tensor tensor)
         {
             int[] indexes = new int[tensor.Dimensions.Length];
             int leftover = index;
@@ -215,7 +215,7 @@ namespace DNAMatrices
         /// <param name="dim2"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public static bool IsSameDimension(DNATensor tensor1, DNATensor tensor2)
+        public static bool IsSameDimension(Tensor tensor1, Tensor tensor2)
         {
             int[] dim1 = tensor1.Dimensions;
             int[] dim2 = tensor2.Dimensions;
@@ -241,7 +241,7 @@ namespace DNAMatrices
         /// <param name="dim2"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public static bool IsSameDimension(DNATensor tensor, DNAMatrix matrix)
+        public static bool IsSameDimension(Tensor tensor, Matrix matrix)
         {
             int[] dim1 = tensor.MatrixProperties.MatrixDimension;
             int[] dim2 = matrix.Dimensions;
@@ -304,7 +304,7 @@ namespace DNAMatrices
         /// </summary>
         /// <param name="tensor"></param>
         /// <exception cref="IndexOutOfRangeException"></exception>
-        public void PasteTensor(DNATensor tensor)
+        public void PasteTensor(Tensor tensor)
         {
             if (tensor.Length <= Length)
                 Array.Copy(tensor.Values, 0, _values, 0, tensor.Length);
@@ -318,11 +318,11 @@ namespace DNAMatrices
         /// <param name="tensorA"></param>
         /// <param name="tensorB"></param>
         /// <returns></returns>
-        public static DNATensor operator +(DNATensor tensorA, DNATensor tensorB)
+        public static Tensor operator +(Tensor tensorA, Tensor tensorB)
         {
-            if (DNATensor.IsSameDimension(tensorA, tensorB))
+            if (Tensor.IsSameDimension(tensorA, tensorB))
             {
-                DNATensor outputTensor = new DNATensor(tensorA.Dimensions);
+                Tensor outputTensor = new Tensor(tensorA.Dimensions);
 
                 for (int i = 0; i < tensorA.Length; i++)
                     outputTensor[i] = tensorA[i] + tensorB[i];
@@ -339,11 +339,11 @@ namespace DNAMatrices
         /// <param name="tensorA"></param>
         /// <param name="tensorB"></param>
         /// <returns></returns>
-        public static DNATensor operator -(DNATensor tensorA, DNATensor tensorB)
+        public static Tensor operator -(Tensor tensorA, Tensor tensorB)
         {
-            if (DNATensor.IsSameDimension(tensorA, tensorB))
+            if (Tensor.IsSameDimension(tensorA, tensorB))
             {
-                DNATensor outputTensor = new DNATensor(tensorA.Dimensions);
+                Tensor outputTensor = new Tensor(tensorA.Dimensions);
 
                 for (int i = 0; i < tensorA.Length; i++)
                     outputTensor[i] = tensorA[i] - tensorB[i];
@@ -360,9 +360,9 @@ namespace DNAMatrices
         /// <param name="tensorA"></param>
         /// <param name="tensorB"></param>
         /// <returns></returns>
-        public static DNATensor operator +(DNATensor tensor, double additive)
+        public static Tensor operator +(Tensor tensor, double additive)
         {
-            DNATensor outputTensor = new DNATensor(tensor.Dimensions);
+            Tensor outputTensor = new Tensor(tensor.Dimensions);
 
             for (int i = 0; i < tensor.Length; i++)
                 outputTensor[i] = tensor[i] + additive;
@@ -376,9 +376,9 @@ namespace DNAMatrices
         /// <param name="tensorA"></param>
         /// <param name="tensorB"></param>
         /// <returns></returns>
-        public static DNATensor operator -(DNATensor tensor, double substrator)
+        public static Tensor operator -(Tensor tensor, double substrator)
         {
-            DNATensor outputTensor = new DNATensor(tensor.Dimensions);
+            Tensor outputTensor = new Tensor(tensor.Dimensions);
 
             for (int i = 0; i < tensor.Length; i++)
                 outputTensor[i] = tensor[i] - substrator;
@@ -392,9 +392,9 @@ namespace DNAMatrices
         /// <param name="tensorA"></param>
         /// <param name="tensorB"></param>
         /// <returns></returns>
-        public static DNATensor operator *(DNATensor tensor, double multiplier)
+        public static Tensor operator *(Tensor tensor, double multiplier)
         {
-            DNATensor outputTensor = new DNATensor(tensor.Dimensions);
+            Tensor outputTensor = new Tensor(tensor.Dimensions);
 
             for (int i = 0; i < tensor.Length; i++)
                 outputTensor[i] = tensor[i] * multiplier;
@@ -408,9 +408,9 @@ namespace DNAMatrices
         /// <param name="tensorA"></param>
         /// <param name="tensorB"></param>
         /// <returns></returns>
-        public static DNATensor operator /(DNATensor tensor, double diviser)
+        public static Tensor operator /(Tensor tensor, double diviser)
         {
-            DNATensor outputTensor = new DNATensor(tensor.Dimensions);
+            Tensor outputTensor = new Tensor(tensor.Dimensions);
 
             for (int i = 0; i < tensor.Length; i++)
                 outputTensor[i] = tensor[i] / diviser;
@@ -425,7 +425,7 @@ namespace DNAMatrices
         /// <param name="matrix"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public static DNATensor operator ^(DNATensor tensor, DNAMatrix matrix)
+        public static Tensor operator ^(Tensor tensor, Matrix matrix)
         {
             bool SAME_DIMENSIONS = IsSameDimension(tensor, matrix);
             bool TENSOR3D = tensor.Dimensions.Length == 3;
@@ -437,7 +437,7 @@ namespace DNAMatrices
                     int[] dims = (int[])(tensor.Dimensions.Clone());
                     dims[0] += 1;
 
-                    DNATensor outputTensor = new DNATensor(dims);
+                    Tensor outputTensor = new Tensor(dims);
 
                     outputTensor.PasteTensor(tensor);
                     outputTensor.MatrixProperties[outputTensor.MatrixProperties.NumberOfMatrices - 1] = matrix;

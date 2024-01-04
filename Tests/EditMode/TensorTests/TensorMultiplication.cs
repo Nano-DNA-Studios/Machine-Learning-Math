@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using DNAMatrices;
+using MachineLearningMath;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -14,9 +14,9 @@ public class TensorMultiplication
     int[] integerValues = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
     double[] doubleValues = new double[] { 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2.5 };
 
-    DNATensor DoubleIncrement = DNATensor.Increment(DefaultDimension) * 2;
-    DNATensor Increment = new DNATensor(DefaultDimension);
-    DNATensor Empty = new DNATensor(DefaultDimension);
+    Tensor DoubleIncrement = Tensor.Increment(DefaultDimension) * 2;
+    Tensor Increment = new Tensor(DefaultDimension);
+    Tensor Empty = new Tensor(DefaultDimension);
 
     TestHelper Helper = new TestHelper();
 
@@ -28,9 +28,9 @@ public class TensorMultiplication
     {
         foreach (int scalar in integerValues)
         {
-            DNATensor Tensor = DNATensor.Increment(DefaultDimension);
+            Tensor Tensor = Tensor.Increment(DefaultDimension);
 
-            DNATensor ResultTensor = Tensor * scalar;
+            Tensor ResultTensor = Tensor * scalar;
 
             double[] values = Helper.ScalarMult(Helper.GetIncrementValues(DefaultDimension), scalar);
 
@@ -47,9 +47,9 @@ public class TensorMultiplication
     {
         foreach (int scalar in integerValues)
         {
-            DNATensor Tensor = new DNATensor(DefaultDimension);
+            Tensor Tensor = new Tensor(DefaultDimension);
 
-            DNATensor ResultTensor = Tensor * scalar;
+            Tensor ResultTensor = Tensor * scalar;
 
             double[] values = Helper.ScalarMult(Helper.GetEmptyValues(DefaultDimension), scalar);
 
@@ -66,9 +66,9 @@ public class TensorMultiplication
     {
         foreach (double scalar in doubleValues)
         {
-            DNATensor Tensor = DNATensor.Increment(DefaultDimension);
+            Tensor Tensor = Tensor.Increment(DefaultDimension);
 
-            DNATensor ResultTensor = Tensor * scalar;
+            Tensor ResultTensor = Tensor * scalar;
 
             double[] values = Helper.ScalarMult(Helper.GetIncrementValues(DefaultDimension), scalar);
 
@@ -85,9 +85,9 @@ public class TensorMultiplication
     {
         foreach (double scalar in doubleValues)
         {
-            DNATensor Tensor = new DNATensor(DefaultDimension);
+            Tensor Tensor = new Tensor(DefaultDimension);
 
-            DNATensor ResultTensor = Tensor * scalar;
+            Tensor ResultTensor = Tensor * scalar;
 
             double[] values = Helper.ScalarMult(Helper.GetEmptyValues(DefaultDimension), scalar);
 

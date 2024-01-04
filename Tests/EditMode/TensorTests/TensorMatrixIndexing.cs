@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using DNAMatrices;
+using MachineLearningMath;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -16,8 +16,8 @@ public class TensorMatrixIndexing
     [Test]
     public void AccessEmptyMatrix ()
     {
-        DNATensor tensor = new DNATensor(Helper.DefaultDimension);
-        DNAMatrix emptyMatrix = Helper.EmptyMatrix;
+        Tensor tensor = new Tensor(Helper.DefaultDimension);
+        Matrix emptyMatrix = Helper.EmptyMatrix;
 
 
         //First Matrix
@@ -39,8 +39,8 @@ public class TensorMatrixIndexing
     [Test]
     public void AccessIncrementMatrix()
     {
-        DNATensor tensor = DNATensor.Increment(Helper.DefaultDimension);
-        DNAMatrix incrementMatrix = DNAMatrix.Increment(4, 4);
+        Tensor tensor = Tensor.Increment(Helper.DefaultDimension);
+        Matrix incrementMatrix = Matrix.Increment(4, 4);
 
         //First Matrix
         Assert.AreEqual(tensor.MatrixProperties[0].Dimensions, incrementMatrix.Dimensions);
