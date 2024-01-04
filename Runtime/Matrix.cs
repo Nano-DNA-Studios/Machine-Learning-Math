@@ -79,6 +79,7 @@ namespace MachineLearningMath
         /// </summary>
         public int Height { get => _height; set => _height = value; }
 
+
         /// <summary>
         /// Describes the number of columns the matrix has
         /// </summary>

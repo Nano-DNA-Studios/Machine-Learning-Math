@@ -3,7 +3,6 @@ using System;
 
 namespace MachineLearningMath
 {
-
     /// <summary>
     /// Custom Matrix Class developped for working on the GPU and with DNANeuralNetworks
     /// </summary>
@@ -95,6 +94,10 @@ namespace MachineLearningMath
             }
         }
 
+        /// <summary>
+        /// Constructor function initializing the Matrix
+        /// </summary>
+        /// <param name="matrix"></param>
         public MatrixFloat (Matrix matrix)
         {
             this.Width = matrix.Width;
