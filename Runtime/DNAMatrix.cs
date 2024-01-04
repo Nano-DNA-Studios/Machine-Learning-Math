@@ -241,7 +241,7 @@ namespace DNAMatrices
 
             for (int i = 0; i < width * height; i++)
             {
-                matrix[i] = i + 1;
+                matrix[i] = i;
             }
 
             return matrix;
@@ -429,9 +429,23 @@ namespace DNAMatrices
                 }
             }
             else
-            {
                 Debug.Log("Error, Dimensions don't match");
-            }
+
+            return newMat;
+        }
+
+        /// <summary>
+        /// Operator for Adding a Scalar to the Matrix
+        /// </summary>
+        /// <param name="matrixA"></param>
+        /// <param name="matrixB"></param>
+        /// <returns></returns>
+        public static DNAMatrix operator +(DNAMatrix matrixA, double scalar)
+        {
+            DNAMatrix newMat = new DNAMatrix(matrixA.Height, matrixA.Width);
+
+            for (int i = 0; i < matrixA.Values.Length; i++)
+                newMat[i] = matrixA[i] + scalar;
 
             return newMat;
         }
@@ -459,6 +473,22 @@ namespace DNAMatrices
             {
                 Debug.Log("Error, Dimensions don't match");
             }
+
+            return newMat;
+        }
+
+        /// <summary>
+        /// Operator for Subtracting a Scalar from the Matrix
+        /// </summary>
+        /// <param name="matrixA"></param>
+        /// <param name="matrixB"></param>
+        /// <returns></returns>
+        public static DNAMatrix operator -(DNAMatrix matrixA, double scalar)
+        {
+            DNAMatrix newMat = new DNAMatrix(matrixA.Height, matrixA.Width);
+
+            for (int i = 0; i < matrixA.Values.Length; i++)
+                newMat[i] = matrixA[i] - scalar;
 
             return newMat;
         }
@@ -506,7 +536,7 @@ namespace DNAMatrices
         /// <param name="matrixA"></param>
         /// <param name="factor"></param>
         /// <returns></returns>
-        public static DNAMatrix operator *(DNAMatrix matrixA, double factor)
+        public static DNAMatrix operator *(DNAMatrix matrixA, double scalar)
         {
             DNAMatrix newMat = new DNAMatrix(0, 0);
 
@@ -514,7 +544,7 @@ namespace DNAMatrices
 
             for (int i = 0; i < matrixA.Values.Length; i++)
             {
-                newMat[i] = matrixA[i] * factor;
+                newMat[i] = matrixA[i] * scalar;
             }
 
             return newMat;

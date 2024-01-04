@@ -17,6 +17,9 @@ public class TestHelper
     public DNATensor Increment = new DNATensor(_DefaultDimension);
     public DNATensor Empty = new DNATensor(_DefaultDimension);
 
+    public DNAMatrix EmptyMatrix = new DNAMatrix(4, 4);
+    public DNAMatrix IncrementMatrix = DNAMatrix.Increment(4, 4);
+
     public double[] IncrememtArray = DNATensor.Increment(_DefaultDimension).Values;
     public double[] EmptyArray = new DNATensor(_DefaultDimension).Values;
 

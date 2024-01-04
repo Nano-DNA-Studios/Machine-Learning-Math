@@ -235,6 +235,32 @@ namespace DNAMatrices
         }
 
         /// <summary>
+        /// Determines if the Tensors have the Same Dimension
+        /// </summary>
+        /// <param name="dim1"></param>
+        /// <param name="dim2"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        private static bool IsSameDimension(DNATensor tensor, DNAMatrix matrix)
+        {
+            int[] dim1 = tensor.MatrixProperties.MatrixDimension;
+            int[] dim2 = matrix.Dimensions;
+
+            if (dim1.Length == dim2.Length)
+            {
+                for (int i = 0; i < dim1.Length; i++)
+                {
+                    if (dim1[i] != dim2[i])
+                        return false;
+                }
+            }
+            else
+                throw new InvalidOperationException($"The Tensors dimensions do not match with the Matrix. ({dim1.Length}, {dim2.Length})");
+
+            return true;
+        }
+
+        /// <summary>
         /// Returns the total Length of the Values in the Tensor
         /// </summary>
         /// <returns></returns>
