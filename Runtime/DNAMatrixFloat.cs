@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace DNAMatrices
+namespace MachineLearningMath
 {
 
     /// <summary>
