@@ -427,16 +427,14 @@ namespace DNAMatrices
         /// <exception cref="InvalidOperationException"></exception>
         public static DNATensor operator ^(DNATensor tensor, DNAMatrix matrix)
         {
-            int[] tensorMatrixDimension = tensor.MatrixProperties.MatrixDimension;
-
-            bool SAME_DIMENSIONS = tensorMatrixDimension == matrix.Dimensions;
+            bool SAME_DIMENSIONS = IsSameDimension(tensor, matrix);
             bool TENSOR3D = tensor.Dimensions.Length == 3;
 
             if (TENSOR3D)
             {
                 if (SAME_DIMENSIONS)
                 {
-                    int[] dims = tensor.Dimensions;
+                    int[] dims = (int[])(tensor.Dimensions.Clone());
                     dims[0] += 1;
 
                     DNATensor outputTensor = new DNATensor(dims);
@@ -445,7 +443,6 @@ namespace DNAMatrices
                     outputTensor.MatrixProperties[outputTensor.MatrixProperties.NumberOfMatrices - 1] = matrix;
 
                     return outputTensor;
-
                 }
                 else
                     throw new InvalidOperationException("Matrix Dimensions do not match with the Tensors.");
