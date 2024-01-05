@@ -209,7 +209,7 @@ namespace MachineLearningMath
 
             for (int i = 0; i < width * height; i++)
             {
-                matrix[i] = i + 1;
+                matrix[i] = i;
             }
 
             return matrix;

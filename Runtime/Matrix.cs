@@ -77,7 +77,8 @@ namespace MachineLearningMath
         /// <summary>
         /// Describes the number of rows the matrix has
         /// </summary>
-        public int Height { get { return _height; } set { _height = value; } }
+        public int Height { get => _height; set => _height = value; }
+
 
         /// <summary>
         /// Describes the number of columns the matrix has
@@ -88,17 +89,22 @@ namespace MachineLearningMath
         /// <summary>
         /// Describes the number of columns the matrix has
         /// </summary>
-        public int Width { get { return _width; } set { _width = value; } }
+        public int Width { get => _width; set => _width = value; }
 
         /// <summary>
         /// Gets the Dimensions of the Matrix in String Form (HeightxWidth)
         /// </summary>
-        public string Dimensions { get { return $"({Height} x {Width})"; } }
+        public string DebugDimension { get => GetDebugDimension(); }
+
+        /// <summary>
+        /// Gets the Dimensions of the Matrix in Array format
+        /// </summary>
+        public int[] Dimensions { get => new int[] { Height, Width }; }
 
         /// <summary>
         /// Describes the number of values in the Matrix
         /// </summary>
-        public int Length { get { return Width * Height; } }
+        public int Length { get => Width * Height; }
 
         /// <summary>
         /// A list of all values contained in the matrix
@@ -236,7 +242,7 @@ namespace MachineLearningMath
 
             for (int i = 0; i < width * height; i++)
             {
-                matrix[i] = i + 1;
+                matrix[i] = i;
             }
 
             return matrix;
@@ -314,6 +320,32 @@ namespace MachineLearningMath
         }
 
         /// <summary>
+        /// Determines if the Tensors have the Same Dimension
+        /// </summary>
+        /// <param name="dim1"></param>
+        /// <param name="dim2"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        private static bool IsSameDimension(Matrix matrix1, Matrix matrix2)
+        {
+            int[] dim1 = matrix1.Dimensions;
+            int[] dim2 = matrix2.Dimensions;
+
+            if (dim1.Length == dim2.Length)
+            {
+                for (int i = 0; i < dim1.Length; i++)
+                {
+                    if (dim1[i] != dim2[i])
+                        return false;
+                }
+            }
+            else
+                throw new InvalidOperationException($"Matrix dimensions do not match. ({dim1.Length}, {dim2.Length})");
+
+            return true;
+        }
+
+        /// <summary>
         /// Returns the Dot Product
         /// </summary>
         /// <param name="vector1"></param>
@@ -379,6 +411,28 @@ namespace MachineLearningMath
         }
 
         /// <summary>
+        /// Stacks 2 Matrices on top of each other Creating a Tensor
+        /// </summary>
+        /// <param name="matrixA"></param>
+        /// <param name="matrixB"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static Tensor operator ^(Matrix matrixA, Matrix matrixB)
+        {
+            if (IsSameDimension(matrixA, matrixB))
+            {
+                Tensor outputTensor = new Tensor(new int[] { 2, matrixA.Height, matrixB.Width });
+
+                outputTensor.MatrixProperties[0] = matrixA;
+                outputTensor.MatrixProperties[1] = matrixB;
+
+                return outputTensor;
+            }
+            else
+                throw new InvalidOperationException("Matrix Dimensions do not match.");
+        }
+
+        /// <summary>
         /// Operator for adding two matrices together
         /// </summary>
         /// <param name="matrixA"></param>
@@ -402,9 +456,23 @@ namespace MachineLearningMath
                 }
             }
             else
-            {
                 Debug.Log("Error, Dimensions don't match");
-            }
+
+            return newMat;
+        }
+
+        /// <summary>
+        /// Operator for Adding a Scalar to the Matrix
+        /// </summary>
+        /// <param name="matrixA"></param>
+        /// <param name="matrixB"></param>
+        /// <returns></returns>
+        public static Matrix operator +(Matrix matrixA, double scalar)
+        {
+            Matrix newMat = new Matrix(matrixA.Height, matrixA.Width);
+
+            for (int i = 0; i < matrixA.Values.Length; i++)
+                newMat[i] = matrixA[i] + scalar;
 
             return newMat;
         }
@@ -432,6 +500,22 @@ namespace MachineLearningMath
             {
                 Debug.Log("Error, Dimensions don't match");
             }
+
+            return newMat;
+        }
+
+        /// <summary>
+        /// Operator for Subtracting a Scalar from the Matrix
+        /// </summary>
+        /// <param name="matrixA"></param>
+        /// <param name="matrixB"></param>
+        /// <returns></returns>
+        public static Matrix operator -(Matrix matrixA, double scalar)
+        {
+            Matrix newMat = new Matrix(matrixA.Height, matrixA.Width);
+
+            for (int i = 0; i < matrixA.Values.Length; i++)
+                newMat[i] = matrixA[i] - scalar;
 
             return newMat;
         }
@@ -479,7 +563,7 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="factor"></param>
         /// <returns></returns>
-        public static Matrix operator *(Matrix matrixA, double factor)
+        public static Matrix operator *(Matrix matrixA, double scalar)
         {
             Matrix newMat = new Matrix(0, 0);
 
@@ -487,7 +571,7 @@ namespace MachineLearningMath
 
             for (int i = 0; i < matrixA.Values.Length; i++)
             {
-                newMat[i] = matrixA[i] * factor;
+                newMat[i] = matrixA[i] * scalar;
             }
 
             return newMat;
@@ -775,26 +859,56 @@ namespace MachineLearningMath
         }
 
         /// <summary>
-        /// Displays the Matrix in the correct fashion, for debugging purposes
+        // /// Returns the Max Value in the Matrix
         /// </summary>
-        public string DisplayMat()
+        /// <returns></returns>
+        public double GetMaxValue()
+        {
+            double max = Values[0];
+
+            foreach (double val in Values)
+            {
+                if (val >= max)
+                    max = val;
+            }
+
+            return max;
+        }
+
+        /// <summary>
+        /// Displays the Matrix in the Debug Log, for debugging purposes
+        /// </summary>
+        public void DisplayMat()
         {
             //Display the matrix
             string line = "\n";
             for (int height = 0; height < this.Height; height++)
             {
                 for (int width = 0; width < this.Width; width++)
-                {
-
-                    //Debug.Log("Width: " + width + " Height: " + height + " = " + newMat[getIndex(width, height, dim.x)]);
-
                     line += $"{this[height, width]}   ";
-                }
-                line += "\n";
 
+                line += "\n";
             }
 
             Debug.Log(line);
+        }
+
+        /// <summary>
+        /// Returns the Matrix in a string format to display
+        /// </summary>
+        /// <returns></returns>
+        public string GetDisplayMat()
+        {
+            //Display the matrix
+            string line = "\n";
+
+            for (int height = 0; height < this.Height; height++)
+            {
+                for (int width = 0; width < this.Width; width++)
+                    line += $"{this[height, width]} ";
+
+                line += "\n";
+            }
 
             return line;
         }
@@ -805,9 +919,18 @@ namespace MachineLearningMath
         /// <param name="matrixA"></param>
         /// <param name="matrixB"></param>
         /// <returns></returns>
-        public static string GetMultOutputDimensions (Matrix matrixA, Matrix matrixB)
+        public static string GetMultOutputDimensions(Matrix matrixA, Matrix matrixB)
         {
             return $"({matrixA.Height} x {matrixB.Width})";
+        }
+
+        /// <summary>
+        /// Returns the Dimensions of the Matrix in a string format 
+        /// </summary>
+        /// <returns></returns>
+        public string GetDebugDimension()
+        {
+            return $"({Height} x {Width})";
         }
 
         /// <summary>
