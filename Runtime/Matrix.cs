@@ -578,6 +578,26 @@ namespace MachineLearningMath
         }
 
         /// <summary>
+        /// Division operation with a Scalar
+        /// </summary>
+        /// <param name="matrixA"></param>
+        /// <param name="factor"></param>
+        /// <returns></returns>
+        public static Matrix operator /(Matrix matrixA, double scalar)
+        {
+            Matrix newMat = new Matrix(0, 0);
+
+            newMat = new Matrix(matrixA.Height, matrixA.Width);
+
+            for (int i = 0; i < matrixA.Values.Length; i++)
+            {
+                newMat[i] = matrixA[i] / scalar;
+            }
+
+            return newMat;
+        }
+
+        /// <summary>
         /// Handles a Matrix Multiplication by handing it off to the GPU, this makes it crazy fast
         /// </summary>
         /// <param name="matrixA"></param>
